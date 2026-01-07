@@ -1,9 +1,8 @@
-import React from 'react';
+import React from "react";
 import {
   Paper,
   Typography,
   Box,
-  Grid,
   Avatar,
   IconButton,
   Chip,
@@ -16,8 +15,8 @@ import {
   TextField,
   InputAdornment,
   Stack,
-  Button
-} from '@mui/material';
+  Button,
+} from "@mui/material";
 import {
   Search,
   Email,
@@ -26,8 +25,8 @@ import {
   Delete,
   Star,
   LocationOn,
-  CalendarToday
-} from '@mui/icons-material';
+  CalendarToday,
+} from "@mui/icons-material";
 
 interface Customer {
   id: number;
@@ -37,32 +36,101 @@ interface Customer {
   location: string;
   bookings: number;
   totalSpent: number;
-  status: 'active' | 'inactive' | 'vip';
+  status: "active" | "inactive" | "vip";
   lastActivity: string;
 }
 
 const CustomerManagement: React.FC = () => {
   const customers: Customer[] = [
-    { id: 1, name: 'John Doe', email: 'john@example.com', phone: '+1 234 567 8900', location: 'New York', bookings: 12, totalSpent: 28750, status: 'vip', lastActivity: '2024-03-15' },
-    { id: 2, name: 'Jane Smith', email: 'jane@example.com', phone: '+1 234 567 8901', location: 'London', bookings: 8, totalSpent: 19500, status: 'active', lastActivity: '2024-03-16' },
-    { id: 3, name: 'Bob Johnson', email: 'bob@example.com', phone: '+1 234 567 8902', location: 'Sydney', bookings: 5, totalSpent: 12500, status: 'active', lastActivity: '2024-03-14' },
-    { id: 4, name: 'Alice Brown', email: 'alice@example.com', phone: '+1 234 567 8903', location: 'Tokyo', bookings: 3, totalSpent: 8500, status: 'inactive', lastActivity: '2024-02-28' },
-    { id: 5, name: 'Charlie Wilson', email: 'charlie@example.com', phone: '+1 234 567 8904', location: 'Paris', bookings: 15, totalSpent: 35200, status: 'vip', lastActivity: '2024-03-16' },
+    {
+      id: 1,
+      name: "John Doe",
+      email: "john@example.com",
+      phone: "+1 234 567 8900",
+      location: "New York",
+      bookings: 12,
+      totalSpent: 28750,
+      status: "vip",
+      lastActivity: "2024-03-15",
+    },
+    {
+      id: 2,
+      name: "Jane Smith",
+      email: "jane@example.com",
+      phone: "+1 234 567 8901",
+      location: "London",
+      bookings: 8,
+      totalSpent: 19500,
+      status: "active",
+      lastActivity: "2024-03-16",
+    },
+    {
+      id: 3,
+      name: "Bob Johnson",
+      email: "bob@example.com",
+      phone: "+1 234 567 8902",
+      location: "Sydney",
+      bookings: 5,
+      totalSpent: 12500,
+      status: "active",
+      lastActivity: "2024-03-14",
+    },
+    {
+      id: 4,
+      name: "Alice Brown",
+      email: "alice@example.com",
+      phone: "+1 234 567 8903",
+      location: "Tokyo",
+      bookings: 3,
+      totalSpent: 8500,
+      status: "inactive",
+      lastActivity: "2024-02-28",
+    },
+    {
+      id: 5,
+      name: "Charlie Wilson",
+      email: "charlie@example.com",
+      phone: "+1 234 567 8904",
+      location: "Paris",
+      bookings: 15,
+      totalSpent: 35200,
+      status: "vip",
+      lastActivity: "2024-03-16",
+    },
   ];
 
   const stats = [
-    { label: 'Total Customers', value: '1,245', change: '+5.2%', color: '#2196F3' },
-    { label: 'Active Customers', value: '892', change: '+3.8%', color: '#4CAF50' },
-    { label: 'VIP Customers', value: '156', change: '+12.5%', color: '#FF9800' },
-    { label: 'Avg. Spend', value: '$2,450', change: '+8.3%', color: '#9C27B0' },
+    {
+      label: "Total Customers",
+      value: "1,245",
+      change: "+5.2%",
+      color: "#2196F3",
+    },
+    {
+      label: "Active Customers",
+      value: "892",
+      change: "+3.8%",
+      color: "#4CAF50",
+    },
+    {
+      label: "VIP Customers",
+      value: "156",
+      change: "+12.5%",
+      color: "#FF9800",
+    },
+    { label: "Avg. Spend", value: "$2,450", change: "+8.3%", color: "#9C27B0" },
   ];
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'active': return 'success';
-      case 'inactive': return 'error';
-      case 'vip': return 'warning';
-      default: return 'default';
+      case "active":
+        return "success";
+      case "inactive":
+        return "error";
+      case "vip":
+        return "warning";
+      default:
+        return "default";
     }
   };
 
@@ -72,11 +140,12 @@ const CustomerManagement: React.FC = () => {
         <Typography variant="h6" fontWeight="bold" gutterBottom>
           Customer Management
         </Typography>
-        
+
         {/* Stats Cards */}
-        <Grid container spacing={2} mb={3}>
+        {/* Stats Cards */}
+        <Box display="flex" flexWrap="wrap" gap={2} mb={3}>
           {stats.map((stat, index) => (
-            <Grid key={index}>
+            <Box key={index} flex="1 1 220px">
               <Paper sx={{ p: 2, bgcolor: `${stat.color}10` }}>
                 <Typography variant="body2" color="text.secondary" gutterBottom>
                   {stat.label}
@@ -88,15 +157,15 @@ const CustomerManagement: React.FC = () => {
                   label={stat.change}
                   size="small"
                   sx={{
-                    bgcolor: stat.change.includes('+') ? '#4CAF50' : '#F44336',
-                    color: 'white',
-                    fontSize: '0.7rem'
+                    bgcolor: stat.change.includes("+") ? "#4CAF50" : "#F44336",
+                    color: "white",
+                    fontSize: "0.7rem",
                   }}
                 />
               </Paper>
-            </Grid>
+            </Box>
           ))}
-        </Grid>
+        </Box>
 
         {/* Search */}
         <TextField
@@ -131,18 +200,24 @@ const CustomerManagement: React.FC = () => {
                 <TableRow key={customer.id} hover>
                   <TableCell>
                     <Box display="flex" alignItems="center">
-                      <Avatar sx={{ mr: 2 }}>
-                        {customer.name.charAt(0)}
-                      </Avatar>
+                      <Avatar sx={{ mr: 2 }}>{customer.name.charAt(0)}</Avatar>
                       <Box>
                         <Typography fontWeight="medium">
                           {customer.name}
-                          {customer.status === 'vip' && (
-                            <Star sx={{ fontSize: 14, color: '#FF9800', ml: 0.5 }} />
+                          {customer.status === "vip" && (
+                            <Star
+                              sx={{ fontSize: 14, color: "#FF9800", ml: 0.5 }}
+                            />
                           )}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                          <LocationOn sx={{ fontSize: 12, verticalAlign: 'middle', mr: 0.5 }} />
+                          <LocationOn
+                            sx={{
+                              fontSize: 12,
+                              verticalAlign: "middle",
+                              mr: 0.5,
+                            }}
+                          />
                           {customer.location}
                         </Typography>
                       </Box>
@@ -150,16 +225,22 @@ const CustomerManagement: React.FC = () => {
                   </TableCell>
                   <TableCell>
                     <Typography variant="body2">
-                      <Email sx={{ fontSize: 12, verticalAlign: 'middle', mr: 0.5 }} />
+                      <Email
+                        sx={{ fontSize: 12, verticalAlign: "middle", mr: 0.5 }}
+                      />
                       {customer.email}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      <Phone sx={{ fontSize: 12, verticalAlign: 'middle', mr: 0.5 }} />
+                      <Phone
+                        sx={{ fontSize: 12, verticalAlign: "middle", mr: 0.5 }}
+                      />
                       {customer.phone}
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    <Typography fontWeight="bold">{customer.bookings}</Typography>
+                    <Typography fontWeight="bold">
+                      {customer.bookings}
+                    </Typography>
                   </TableCell>
                   <TableCell align="right">
                     <Typography fontWeight="bold" color="primary">
@@ -169,11 +250,17 @@ const CustomerManagement: React.FC = () => {
                   <TableCell align="center">
                     <Chip
                       label={customer.status}
-                      color={getStatusColor(customer.status) }
+                      color={getStatusColor(customer.status)}
                       size="small"
                     />
-                    <Typography variant="caption" display="block" color="text.secondary">
-                      <CalendarToday sx={{ fontSize: 10, verticalAlign: 'middle', mr: 0.5 }} />
+                    <Typography
+                      variant="caption"
+                      display="block"
+                      color="text.secondary"
+                    >
+                      <CalendarToday
+                        sx={{ fontSize: 10, verticalAlign: "middle", mr: 0.5 }}
+                      />
                       {customer.lastActivity}
                     </Typography>
                   </TableCell>
@@ -198,7 +285,11 @@ const CustomerManagement: React.FC = () => {
 
         {/* Customer Satisfaction */}
         <Box mt={3} p={2} bgcolor="background.default" borderRadius={1}>
-          <Stack direction="row" justifyContent="space-between" alignItems="center">
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+          >
             <Box>
               <Typography variant="subtitle2" gutterBottom>
                 Customer Satisfaction
@@ -208,7 +299,7 @@ const CustomerManagement: React.FC = () => {
               </Typography>
               <Stack direction="row" spacing={0.5}>
                 {[1, 2, 3, 4, 5].map((star) => (
-                  <Star key={star} sx={{ color: '#FFD700', fontSize: 16 }} />
+                  <Star key={star} sx={{ color: "#FFD700", fontSize: 16 }} />
                 ))}
               </Stack>
             </Box>

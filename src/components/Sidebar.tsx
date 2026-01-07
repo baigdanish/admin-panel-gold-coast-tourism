@@ -20,9 +20,9 @@ const menuItems = [
     path: "/",
   },
   {
-    text: "Destinations",
+    text: "Tour Management",
     icon: <PlaceIcon />,
-    path: "/destinations",
+    path: "/tour-management",
   },
   {
     text: "BookingTracker",
@@ -50,7 +50,7 @@ function Sidebar() {
   };
 
   return (
-     <Box
+    <Box
       sx={{
         width: "250px",
         height: "100vh",
@@ -64,7 +64,6 @@ function Sidebar() {
         marginTop: "20px",
       }}
     >
-      
       <List>
         {menuItems.map((item) => (
           <ListItem key={item.text} disablePadding>
@@ -90,7 +89,7 @@ function Sidebar() {
               >
                 {item.icon}
               </ListItemIcon>
-              <ListItemText 
+              <ListItemText
                 primary={item.text}
                 primaryTypographyProps={{
                   fontWeight: isActive(item.path) ? "bold" : "normal",

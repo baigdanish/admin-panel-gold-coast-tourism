@@ -1,20 +1,11 @@
-import React from 'react';
-import { 
-  Box, 
-  Typography, 
-  Container,
- 
+import React from "react";
+import { Box, Typography, Container } from "@mui/material";
 
-} from '@mui/material';
-
-import Grid from "@mui/material/Grid";
-import SalesAnalytics from './components/SalesAnalytics';
-import BookingAnalytics from './components/BookingAnalytics';
-import TourManagement from './components/TourManagement';
+import SalesAnalytics from "./components/SalesAnalytics";
+import BookingAnalytics from "./components/BookingAnalytics";
+import TourManagement from "./components/TourManagement";
 
 const Dashboard: React.FC = () => {
-
-
   return (
     <Container maxWidth="xl" sx={{ py: 4 }}>
       {/* Header */}
@@ -28,22 +19,22 @@ const Dashboard: React.FC = () => {
       </Box>
 
       {/* Analytics Section */}
-      <Grid container spacing={3} mb={4}>
-        <Grid  >
+      <Box display="flex" flexWrap="wrap" gap={3} mb={4}>
+        <Box flex={{ xs: "1 1 100%", md: "1 1 calc(50% - 12px)" }}>
           <SalesAnalytics />
-        </Grid>
-        <Grid >
-          <BookingAnalytics />
-        </Grid>
-      </Grid>
+        </Box>
 
-      {/* Tour Management & Booking Tracker */}
-      <Grid container spacing={3} mb={4}>
-        <Grid  >
+        <Box flex={{ xs: "1 1 100%", md: "1 1 calc(50% - 12px)" }}>
+          <BookingAnalytics />
+        </Box>
+      </Box>
+
+      {/* Tour Management */}
+      <Box display="flex">
+        <Box flex="1 1 100%">
           <TourManagement />
-        </Grid>
-       
-      </Grid>
+        </Box>
+      </Box>
     </Container>
   );
 };

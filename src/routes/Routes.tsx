@@ -2,7 +2,7 @@ import ProtectedRoute from "../components/layouts/protectedLayout";
 import BookingTracker from "../pages/BookingTracker";
 import CustomerManagement from "../pages/CustomerManagement";
 import Dashboard from "../pages/Dashboard";
-import Destination from "../pages/Desination";
+import TourManagement from "../pages/TourManagement";
 import VoucherGenerator from "../pages/VoucherGenerator";
 import AppRoutes from "./appRoutes";
 
@@ -14,15 +14,9 @@ const APP_ROUTES = [
       {
         path: AppRoutes.DASHBOARD,
         element: <Dashboard />,
-       
       },
       // Add other protected routes here
-      {
-        path: AppRoutes.DESTINATIONS,
-        index: true,
-        element: <Destination />,
-        
-      },
+
       {
         path: AppRoutes.BOOKING_TRACKER,
         element: <BookingTracker />,
@@ -34,6 +28,10 @@ const APP_ROUTES = [
       {
         path: AppRoutes.VOUCHER_GENERATOR,
         element: <VoucherGenerator />,
+      },
+      {
+        path: AppRoutes.TOUR_MANAGEMENT,
+        element: <TourManagement />,
       },
     ],
   },

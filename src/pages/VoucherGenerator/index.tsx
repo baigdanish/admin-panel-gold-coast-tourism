@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Paper,
   Typography,
   Box,
-  Grid,
   TextField,
   Button,
   IconButton,
@@ -14,7 +13,6 @@ import {
   FormControl,
   InputLabel,
   InputAdornment,
-  
   Table,
   TableBody,
   TableCell,
@@ -25,8 +23,8 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  LinearProgress
-} from '@mui/material';
+  LinearProgress,
+} from "@mui/material";
 import {
   QrCode2,
   ContentCopy,
@@ -37,75 +35,124 @@ import {
   Percent,
   AttachMoney,
   CalendarToday,
-  Person
-} from '@mui/icons-material';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+  Person,
+} from "@mui/icons-material";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 
 interface Voucher {
   id: number;
   code: string;
-  type: 'percentage' | 'fixed' | 'package';
+  type: "percentage" | "fixed" | "package";
   value: number;
   used: number;
   maxUses: number;
   expiryDate: string;
-  status: 'active' | 'expired' | 'used';
+  status: "active" | "expired" | "used";
 }
 
 const VoucherGenerator: React.FC = () => {
   const [vouchers, setVouchers] = useState<Voucher[]>([
-    { id: 1, code: 'WELCOME25', type: 'percentage', value: 25, used: 45, maxUses: 100, expiryDate: '2024-04-30', status: 'active' },
-    { id: 2, code: 'SUMMER100', type: 'fixed', value: 100, used: 28, maxUses: 50, expiryDate: '2024-06-30', status: 'active' },
-    { id: 3, code: 'VIP500', type: 'fixed', value: 500, used: 15, maxUses: 20, expiryDate: '2024-05-15', status: 'active' },
-    { id: 4, code: 'EASTER30', type: 'percentage', value: 30, used: 65, maxUses: 100, expiryDate: '2024-04-10', status: 'expired' },
+    {
+      id: 1,
+      code: "WELCOME25",
+      type: "percentage",
+      value: 25,
+      used: 45,
+      maxUses: 100,
+      expiryDate: "2024-04-30",
+      status: "active",
+    },
+    {
+      id: 2,
+      code: "SUMMER100",
+      type: "fixed",
+      value: 100,
+      used: 28,
+      maxUses: 50,
+      expiryDate: "2024-06-30",
+      status: "active",
+    },
+    {
+      id: 3,
+      code: "VIP500",
+      type: "fixed",
+      value: 500,
+      used: 15,
+      maxUses: 20,
+      expiryDate: "2024-05-15",
+      status: "active",
+    },
+    {
+      id: 4,
+      code: "EASTER30",
+      type: "percentage",
+      value: 30,
+      used: 65,
+      maxUses: 100,
+      expiryDate: "2024-04-10",
+      status: "expired",
+    },
   ]);
 
   const [openCreate, setOpenCreate] = useState(false);
-  const [voucherType, setVoucherType] = useState('percentage');
-  const [voucherValue, setVoucherValue] = useState('');
-  const [voucherCode, setVoucherCode] = useState('');
-  const [maxUses, setMaxUses] = useState('');
-  const [expiryDate, setExpiryDate] = useState('');
+  const [voucherType, setVoucherType] = useState("percentage");
+  const [voucherValue, setVoucherValue] = useState("");
+  const [voucherCode, setVoucherCode] = useState("");
+  const [maxUses, setMaxUses] = useState("");
+  const [expiryDate, setExpiryDate] = useState("");
 
   const voucherData = [
-    { month: 'Jan', generated: 45, used: 32 },
-    { month: 'Feb', generated: 52, used: 45 },
-    { month: 'Mar', generated: 68, used: 58 },
-    { month: 'Apr', generated: 72, used: 65 },
-    { month: 'May', generated: 65, used: 52 },
-    { month: 'Jun', generated: 48, used: 42 },
+    { month: "Jan", generated: 45, used: 32 },
+    { month: "Feb", generated: 52, used: 45 },
+    { month: "Mar", generated: 68, used: 58 },
+    { month: "Apr", generated: 72, used: 65 },
+    { month: "May", generated: 65, used: 52 },
+    { month: "Jun", generated: 48, used: 42 },
   ];
 
   const handleCreateVoucher = () => {
     const newVoucher: Voucher = {
       id: vouchers.length + 1,
-      code: voucherCode ,
-      type: voucherType as 'percentage' | 'fixed' | 'package',
+      code: voucherCode,
+      type: voucherType as "percentage" | "fixed" | "package",
       value: parseFloat(voucherValue),
       used: 0,
       maxUses: parseInt(maxUses) || 100,
-      expiryDate: expiryDate || '2024-12-31',
-      status: 'active'
+      expiryDate: expiryDate || "2024-12-31",
+      status: "active",
     };
     setVouchers([...vouchers, newVoucher]);
     setOpenCreate(false);
     resetForm();
   };
 
-  const resetForm = () => { 
-    setVoucherType('percentage');
-    setVoucherValue('');
-    setVoucherCode('');
-    setMaxUses('');
-    setExpiryDate('');
+  const resetForm = () => {
+    setVoucherType("percentage");
+    setVoucherValue("");
+    setVoucherCode("");
+    setMaxUses("");
+    setExpiryDate("");
   };
 
   const getVoucherColor = (type: string) => {
     switch (type) {
-      case 'percentage': return '#4CAF50';
-      case 'fixed': return '#2196F3';
-      case 'package': return '#FF9800';
-      default: return '#9E9E9E';
+      case "percentage":
+        return "#4CAF50";
+      case "fixed":
+        return "#2196F3";
+      case "package":
+        return "#FF9800";
+      default:
+        return "#9E9E9E";
     }
   };
 
@@ -116,7 +163,12 @@ const VoucherGenerator: React.FC = () => {
 
   return (
     <Paper sx={{ p: 3 }}>
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        mb={3}
+      >
         <Typography variant="h6" fontWeight="bold">
           Voucher & Ticket Generation
         </Typography>
@@ -130,8 +182,10 @@ const VoucherGenerator: React.FC = () => {
       </Box>
 
       {/* Stats and Generator */}
-      <Grid container spacing={3} mb={3}>
-        <Grid >
+      {/* Stats and Generator */}
+      <Box display="flex" flexWrap="wrap" gap={3} mb={3}>
+        {/* Chart */}
+        <Box flex="1 1 420px">
           <Paper sx={{ p: 2 }}>
             <Typography variant="subtitle2" gutterBottom>
               Voucher Usage Trend
@@ -144,16 +198,27 @@ const VoucherGenerator: React.FC = () => {
                   <YAxis />
                   <Tooltip />
                   <Legend />
-                  <Bar dataKey="generated" name="Generated" fill="#8884d8" radius={[4, 4, 0, 0]} />
-                  <Bar dataKey="used" name="Used" fill="#82ca9d" radius={[4, 4, 0, 0]} />
+                  <Bar
+                    dataKey="generated"
+                    name="Generated"
+                    fill="#8884d8"
+                    radius={[4, 4, 0, 0]}
+                  />
+                  <Bar
+                    dataKey="used"
+                    name="Used"
+                    fill="#82ca9d"
+                    radius={[4, 4, 0, 0]}
+                  />
                 </BarChart>
               </ResponsiveContainer>
             </Box>
           </Paper>
-        </Grid>
+        </Box>
 
-        <Grid >
-          <Paper sx={{ p: 2, height: '100%' }}>
+        {/* Quick Generate */}
+        <Box flex="1 1 300px">
+          <Paper sx={{ p: 2, height: "100%" }}>
             <Typography variant="subtitle2" gutterBottom>
               Quick Generate
             </Typography>
@@ -170,7 +235,7 @@ const VoucherGenerator: React.FC = () => {
                   <MenuItem value="package">Package Deal</MenuItem>
                 </Select>
               </FormControl>
-              
+
               <TextField
                 label="Value"
                 size="small"
@@ -179,19 +244,23 @@ const VoucherGenerator: React.FC = () => {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      {voucherType === 'percentage' ? <Percent /> : <AttachMoney />}
+                      {voucherType === "percentage" ? (
+                        <Percent />
+                      ) : (
+                        <AttachMoney />
+                      )}
                     </InputAdornment>
                   ),
                 }}
               />
-              
+
               <TextField
                 label="Code (Optional)"
                 size="small"
                 value={voucherCode}
                 onChange={(e) => setVoucherCode(e.target.value)}
               />
-              
+
               <Button
                 variant="contained"
                 onClick={handleCreateVoucher}
@@ -201,8 +270,8 @@ const VoucherGenerator: React.FC = () => {
               </Button>
             </Stack>
           </Paper>
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
 
       {/* Active Vouchers */}
       <Typography variant="subtitle2" gutterBottom>
@@ -226,7 +295,10 @@ const VoucherGenerator: React.FC = () => {
                 <TableCell>
                   <Stack direction="row" alignItems="center" spacing={1}>
                     <Typography fontWeight="bold">{voucher.code}</Typography>
-                    <IconButton size="small" onClick={() => copyToClipboard(voucher.code)}>
+                    <IconButton
+                      size="small"
+                      onClick={() => copyToClipboard(voucher.code)}
+                    >
                       <ContentCopy fontSize="small" />
                     </IconButton>
                   </Stack>
@@ -243,7 +315,9 @@ const VoucherGenerator: React.FC = () => {
                 </TableCell>
                 <TableCell align="right">
                   <Typography fontWeight="bold">
-                    {voucher.type === 'percentage' ? `${voucher.value}%` : `$${voucher.value}`}
+                    {voucher.type === "percentage"
+                      ? `${voucher.value}%`
+                      : `$${voucher.value}`}
                   </Typography>
                 </TableCell>
                 <TableCell align="right">
@@ -257,12 +331,16 @@ const VoucherGenerator: React.FC = () => {
                       sx={{
                         height: 4,
                         borderRadius: 2,
-                        bgcolor: '#E0E0E0',
-                        '& .MuiLinearProgress-bar': {
-                          bgcolor: voucher.status === 'expired' ? '#F44336' : 
-                                  (voucher.used / voucher.maxUses) > 0.8 ? '#FF9800' : '#4CAF50',
-                          borderRadius: 2
-                        }
+                        bgcolor: "#E0E0E0",
+                        "& .MuiLinearProgress-bar": {
+                          bgcolor:
+                            voucher.status === "expired"
+                              ? "#F44336"
+                              : voucher.used / voucher.maxUses > 0.8
+                              ? "#FF9800"
+                              : "#4CAF50",
+                          borderRadius: 2,
+                        },
                       }}
                     />
                   </Box>
@@ -272,7 +350,7 @@ const VoucherGenerator: React.FC = () => {
                     icon={<CalendarToday sx={{ fontSize: 14 }} />}
                     label={voucher.expiryDate}
                     size="small"
-                    color={voucher.status === 'expired' ? 'error' : 'default'}
+                    color={voucher.status === "expired" ? "error" : "default"}
                   />
                 </TableCell>
                 <TableCell align="center">
@@ -298,43 +376,60 @@ const VoucherGenerator: React.FC = () => {
       </TableContainer>
 
       {/* Ticket Preview */}
+      {/* Ticket Preview */}
       <Box mt={3}>
-        <Paper sx={{ p: 3, bgcolor: '#1a237e', color: 'white' }}>
-          <Grid container spacing={2} alignItems="center">
-            <Grid >
+        <Paper sx={{ p: 3, bgcolor: "#1a237e", color: "white" }}>
+          <Box
+            display="flex"
+            flexWrap="wrap"
+            gap={2}
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <Box flex="1 1 300px">
               <Typography variant="h6" gutterBottom>
                 Travel Booking Ticket
               </Typography>
               <Stack spacing={1}>
                 <Typography variant="body2">
-                  <Person sx={{ verticalAlign: 'middle', mr: 1 }} />
+                  <Person sx={{ verticalAlign: "middle", mr: 1 }} />
                   Customer: John Doe
                 </Typography>
                 <Typography variant="body2">
-                  <CalendarToday sx={{ verticalAlign: 'middle', mr: 1 }} />
+                  <CalendarToday sx={{ verticalAlign: "middle", mr: 1 }} />
                   Tour: European Adventure • Date: 2024-04-15
                 </Typography>
                 <Chip
                   label="CONFIRMED"
                   size="small"
-                  sx={{ bgcolor: '#4CAF50', color: 'white', width: 'fit-content' }}
+                  sx={{
+                    bgcolor: "#4CAF50",
+                    color: "white",
+                    width: "fit-content",
+                  }}
                 />
               </Stack>
-            </Grid>
-            <Grid >
-              <Box sx={{ bgcolor: 'white', p: 1, display: 'inline-block' }}>
-                <QrCode2 sx={{ fontSize: 80, color: '#1a237e' }} />
+            </Box>
+
+            <Box textAlign="center">
+              <Box sx={{ bgcolor: "white", p: 1, display: "inline-block" }}>
+                <QrCode2 sx={{ fontSize: 80, color: "#1a237e" }} />
               </Box>
               <Typography variant="caption" display="block">
                 Scan to verify
               </Typography>
-            </Grid>
-          </Grid>
+            </Box>
+          </Box>
         </Paper>
       </Box>
 
       {/* Create Voucher Dialog */}
-      <Dialog open={openCreate} onClose={() => setOpenCreate(false)} maxWidth="sm" fullWidth>
+      <Dialog
+        open={openCreate}
+        onClose={() => setOpenCreate(false)}
+        maxWidth="sm"
+        fullWidth
+      >
         <DialogTitle>Generate New Voucher</DialogTitle>
         <DialogContent>
           <Stack spacing={2} sx={{ mt: 2 }}>
@@ -358,7 +453,11 @@ const VoucherGenerator: React.FC = () => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    {voucherType === 'percentage' ? <Percent /> : <AttachMoney />}
+                    {voucherType === "percentage" ? (
+                      <Percent />
+                    ) : (
+                      <AttachMoney />
+                    )}
                   </InputAdornment>
                 ),
               }}
