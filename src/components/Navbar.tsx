@@ -10,13 +10,15 @@ const Navbar = () => {
         borderBottom: "1px solid #eee",
         padding: "0 20px",
         display: "flex",
-        
+
         alignItems: "center",
         justifyContent: "space-between",
-        border: "1px solid #eee"
+        border: "1px solid #eee",
       }}
     >
-      <Typography variant="h6">Dashboard</Typography>
+      <Typography variant="h6" color="primary">
+        Gold Coast Tours
+      </Typography>
 
       <Stack direction="row" spacing={2}>
         {/* Icons / Profile */}

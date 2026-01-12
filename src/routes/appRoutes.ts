@@ -1,4 +1,5 @@
 const AppRoutes = {
+  LOGIN: "/",
   DASHBOARD: "/",
   DESTINATIONS: "/destinations",
   HOTELS: "/hotels",

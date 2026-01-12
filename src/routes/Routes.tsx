@@ -1,4 +1,6 @@
+import BlankLayout from "../components/layouts/BlankLayout";
 import ProtectedRoute from "../components/layouts/protectedLayout";
+import Login from "../pages/auth/Login";
 import BookingTracker from "../pages/BookingTracker";
 import CustomerManagement from "../pages/CustomerManagement";
 import Dashboard from "../pages/Dashboard";
@@ -7,6 +9,13 @@ import TourManagement from "../pages/TourManagement";
 import VoucherGenerator from "../pages/VoucherGenerator";
 import AppRoutes from "./appRoutes";
 
+const AUTH_ROUTES = [
+  {
+    path: "/",
+    element: <BlankLayout />,
+    children: [{ path: AppRoutes.LOGIN, element: <Login /> }],
+  },
+];
 const APP_ROUTES = [
   {
     path: "/",
@@ -43,4 +52,4 @@ const APP_ROUTES = [
   // Add public/unprotected routes here if needed
 ];
 
-export default APP_ROUTES;
+export { AUTH_ROUTES, APP_ROUTES };
