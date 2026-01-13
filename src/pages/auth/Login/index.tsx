@@ -5,7 +5,7 @@ import useAuthApiAction from "../../../apiActions/Login/useAuthApiAction";
 import useLoginForm from "../../../forms/login/useLoginForm";
 
 const initialValues: ILoginRequest = {
-  phone: "",
+  email: "",
   password: "",
 };
 

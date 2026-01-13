@@ -58,14 +58,14 @@ function LoginUI(props: ILoginUI) {
           <TextField
             fullWidth
             required
-            error={!!touched.phone && !!errors.phone}
-            helperText={(touched.phone && errors.phone) || ""}
+            error={!!touched.email && !!errors.email}
+            helperText={(touched.email && errors.email) || ""}
             margin="normal"
-            placeholder="Enter your phone"
-            value={values.phone}
+            placeholder="Enter your email"
+            value={values.email}
             variant="outlined"
-            onBlur={handleBlur("phone")}
-            onChange={handleChange("phone")}
+            onBlur={handleBlur("email")}
+            onChange={handleChange("email")}
           />
 
           <TextField

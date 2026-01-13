@@ -3,6 +3,6 @@ export default interface IUserstate {
   isLoggedIn: boolean;
 }
 export interface ILoginRequest {
-  phone: string | any;
+  email: string | any;
   password: string;
 }

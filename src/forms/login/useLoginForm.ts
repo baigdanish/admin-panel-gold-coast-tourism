@@ -8,12 +8,12 @@ import ErrorMessages from "../../constants/errorMessages/auth";
 import * as Yup from "yup";
 
 const defaultValues: ILoginRequest = {
-  phone: "",
+  email: "",
   password: "",
 };
 
 const schema = Yup.object().shape({
-  phone: Yup.string()
+  email: Yup.string()
     .required(ErrorMessages.login.phone || "Phone number or email is required")
     .test("is-valid-phone-or-email", "", function (value) {
       const { createError, path } = this;

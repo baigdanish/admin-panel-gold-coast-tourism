@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Paper,
   Typography,
@@ -11,7 +11,6 @@ import {
   TableRow,
   IconButton,
   Button,
-  Chip,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -19,220 +18,147 @@ import {
   TextField,
   Stack,
   InputAdornment,
-  MenuItem,
-  Select,
   Tabs,
   Tab,
+  CircularProgress,
 } from "@mui/material";
-import {
-  Edit,
-  Delete,
-  Add,
-  Search,
-  Visibility,
-  AttachMoney,
-  People,
-} from "@mui/icons-material";
+import { Add, Edit, Delete, Search, Visibility } from "@mui/icons-material";
+import type { IRequestTours } from "../../interfaces/tours.types";
+import { useToursApiActions } from "../../apiActions/useToursApiActions";
+import useTourForm from "../../forms/tours/useTourForm";
 
 /* =======================
-   RAYNA-LEVEL TOUR MODEL
+   EMPTY TEMPLATE
 ======================= */
-export interface Tour {
-  id: number;
-
-  name: string;
-  city: string;
-  category: string;
-  shortDescription: string;
-
-  adultPrice: number;
-  childPrice: number;
-  infantPrice: number;
-  privatePrice?: number;
-
-  availableDays: string[];
-  timeSlots: string[];
-
-  capacity: number;
-  booked: number;
-
-  pickupIncluded: boolean;
-  pickupLocations: string[];
-  transferType: "SIC" | "Private";
-
-  cancellationPolicy: string;
-  childPolicy: string;
-  refundPolicy: string;
-
-  status: "draft" | "published" | "inactive";
-}
-
-/* =======================
-   EMPTY TOUR TEMPLATE
-======================= */
-const emptyTour: Tour = {
-  id: 0,
-  name: "",
-  city: "",
-  category: "",
+const emptyTours: IRequestTours = {
+  title: "",
   shortDescription: "",
-
-  adultPrice: 0,
-  childPrice: 0,
-  infantPrice: 0,
-
-  availableDays: [],
-  timeSlots: [],
-
-  capacity: 0,
-  booked: 0,
-
-  pickupIncluded: true,
-  pickupLocations: [],
-  transferType: "SIC",
-
-  cancellationPolicy: "",
-  childPolicy: "",
-  refundPolicy: "",
-
-  status: "draft",
+  description: "",
+  city: "",
+  country: "",
+  address: "",
+  latitude: 0,
+  longitude: 0,
+  durationInMinutes: 0,
+  minGuests: 1,
+  maxGuests: 1,
+  priceFrom: 0,
+  currency: "USD",
+  coverImageUrl: "",
+  imageUrls: [],
+  categoryIds: [],
+  metaTitle: "",
+  metaDescription: "",
 };
-const dummyTours: Tour[] = [
+
+/* =======================
+   DUMMY DATA
+======================= */
+const dummyTours: IRequestTours[] = [
   {
-    id: 1,
-    name: "Dubai Desert Safari with BBQ Dinner",
+    title: "Dubai Desert Safari",
+    shortDescription: "Dune bashing & BBQ dinner",
+    description: "Evening desert safari with live entertainment and BBQ.",
     city: "Dubai",
-    category: "Desert Safari",
-    shortDescription: "Evening desert safari with dune bashing and BBQ dinner",
-
-    adultPrice: 250,
-    childPrice: 200,
-    infantPrice: 0,
-
-    availableDays: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-    timeSlots: ["Evening"],
-
-    capacity: 50,
-    booked: 32,
-
-    pickupIncluded: true,
-    pickupLocations: ["Deira", "Bur Dubai", "Marina"],
-    transferType: "SIC",
-
-    cancellationPolicy: "Free cancellation up to 24 hours before the tour",
-    childPolicy: "Children under 3 years are free",
-    refundPolicy: "No refund for no-shows",
-
-    status: "published",
+    country: "UAE",
+    address: "Dubai Desert",
+    latitude: 25.2048,
+    longitude: 55.2708,
+    durationInMinutes: 360,
+    minGuests: 1,
+    maxGuests: 50,
+    priceFrom: 75,
+    currency: "USD",
+    coverImageUrl: "",
+    imageUrls: ["https://picsum.photos/300"],
+    categoryIds: [1],
+    metaTitle: "Dubai Desert Safari",
+    metaDescription: "Best desert safari in Dubai",
   },
   {
-    id: 2,
-    name: "Dubai City Tour",
+    title: "Dhow Cruise Marina",
+    shortDescription: "Luxury dinner cruise",
+    description: "Enjoy buffet dinner while cruising Dubai Marina.",
     city: "Dubai",
-    category: "City Tour",
-    shortDescription: "Half-day guided city tour of Dubai",
-
-    adultPrice: 180,
-    childPrice: 140,
-    infantPrice: 0,
-
-    availableDays: ["Sun", "Mon", "Wed", "Fri"],
-    timeSlots: ["Morning"],
-
-    capacity: 30,
-    booked: 18,
-
-    pickupIncluded: true,
-    pickupLocations: ["Downtown", "JBR", "Business Bay"],
-    transferType: "SIC",
-
-    cancellationPolicy: "Free cancellation up to 12 hours before the tour",
-    childPolicy: "Child price applies from 3–10 years",
-    refundPolicy: "Refund within 7 working days",
-
-    status: "published",
-  },
-  {
-    id: 3,
-    name: "Dhow Cruise Marina Dinner",
-    city: "Dubai",
-    category: "Cruise",
-    shortDescription: "Luxury dinner cruise at Dubai Marina",
-
-    adultPrice: 220,
-    childPrice: 180,
-    infantPrice: 0,
-
-    availableDays: ["Thu", "Fri", "Sat"],
-    timeSlots: ["Evening"],
-
-    capacity: 40,
-    booked: 40,
-
-    pickupIncluded: true,
-    pickupLocations: ["Sharjah", "Ajman", "Dubai"],
-    transferType: "Private",
-
-    cancellationPolicy: "Non-refundable within 24 hours",
-    childPolicy: "Children below 5 years are free",
-    refundPolicy: "Refund only if tour is cancelled by operator",
-
-    status: "inactive",
+    country: "UAE",
+    address: "Dubai Marina",
+    latitude: 25.0808,
+    longitude: 55.1403,
+    durationInMinutes: 120,
+    minGuests: 1,
+    maxGuests: 200,
+    priceFrom: 55,
+    currency: "USD",
+    coverImageUrl: "",
+    imageUrls: ["https://picsum.photos/301"],
+    categoryIds: [2],
+    metaTitle: "Dhow Cruise Marina",
+    metaDescription: "Dubai Marina Dinner Cruise",
   },
 ];
 
-const TourManagement: React.FC = () => {
-  const [tours, setTours] = useState<Tour[]>(dummyTours);
-  const [openDialog, setOpenDialog] = useState(false);
-  const [editingTour, setEditingTour] = useState<Tour | null>(null);
-  const [formData, setFormData] = useState<Tour>(emptyTour);
+const ToursManagement: React.FC = () => {
+  const { tryAddTours } = useToursApiActions();
+
+  const [data, setData] = useState<IRequestTours[]>(dummyTours);
+  const [open, setOpen] = useState(false);
+  const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [tab, setTab] = useState(0);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [search, setSearch] = useState("");
 
   /* =======================
-     HANDLERS
+     SUBMIT
   ======================= */
-  const handleChange = (field: keyof Tour, value: any) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-  };
+  async function onSubmit(values: IRequestTours) {
+    await tryAddTours(values);
 
-  const handleSave = () => {
-    if (!formData.name || !formData.city) return;
-
-    if (editingTour) {
-      setTours((prev) =>
-        prev.map((t) => (t.id === editingTour.id ? formData : t))
-      );
+    if (editingIndex !== null) {
+      setData((prev) => prev.map((t, i) => (i === editingIndex ? values : t)));
     } else {
-      setTours((prev) => [...prev, { ...formData, id: Date.now(), booked: 0 }]);
+      setData((prev) => [...prev, values]);
     }
 
-    setOpenDialog(false);
-    setEditingTour(null);
-    setFormData(emptyTour);
+    onClose();
+  }
+
+  const formik = useTourForm(onSubmit, emptyTours);
+
+  const {
+    values,
+    touched,
+    errors,
+    isSubmitting,
+    isValid,
+    dirty,
+    handleBlur,
+    handleChange,
+    handleSubmit,
+    setFieldValue,
+    resetForm,
+    setValues,
+  } = formik;
+
+  const onClose = () => {
+    resetForm();
+    setEditingIndex(null);
+    setOpen(false);
     setTab(0);
   };
 
-  const handleEdit = (tour: Tour) => {
-    setEditingTour(tour);
-    setFormData(tour);
-    setOpenDialog(true);
-  };
+  /* =======================
+     EDIT MODE
+  ======================= */
+  useEffect(() => {
+    if (editingIndex !== null) {
+      setValues(data[editingIndex]);
+    } else {
+      resetForm();
+    }
+  }, [editingIndex]);
 
-  const handleDelete = (id: number) => {
-    setTours((prev) => prev.filter((t) => t.id !== id));
-  };
-
-  const filteredTours = tours.filter((tour) =>
-    tour.name.toLowerCase().includes(searchTerm.toLowerCase())
+  const filtered = data.filter((t) =>
+    t.title.toLowerCase().includes(search.toLowerCase())
   );
-
-  const statusColor = (status: Tour["status"]) =>
-    status === "published"
-      ? "success"
-      : status === "inactive"
-      ? "error"
-      : "warning";
 
   /* =======================
      UI
@@ -241,27 +167,26 @@ const TourManagement: React.FC = () => {
     <Paper sx={{ p: 3 }}>
       <Box display="flex" justifyContent="space-between" mb={2}>
         <Typography variant="h6" fontWeight="bold">
-          Tour Management
+          Tours Management
         </Typography>
         <Button
           variant="contained"
           startIcon={<Add />}
           onClick={() => {
-            setEditingTour(null);
-            setFormData(emptyTour);
-            setOpenDialog(true);
+            setEditingIndex(null);
+            setOpen(true);
           }}
         >
-          Create Tour
+          Add Tour
         </Button>
       </Box>
 
       <TextField
-        placeholder="Search tour..."
-        size="small"
         fullWidth
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
+        size="small"
+        placeholder="Search tours..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
@@ -269,51 +194,55 @@ const TourManagement: React.FC = () => {
             </InputAdornment>
           ),
         }}
-        sx={{ mb: 3 }}
+        sx={{ mb: 2 }}
       />
 
-      {/* TABLE */}
+      {/* ===== TABLE ===== */}
       <TableContainer>
         <Table>
           <TableHead>
             <TableRow>
               <TableCell>Tour</TableCell>
               <TableCell>City</TableCell>
-              <TableCell align="center">Price</TableCell>
-              <TableCell align="center">Capacity</TableCell>
-              <TableCell align="center">Status</TableCell>
-              <TableCell align="center">Actions</TableCell>
+              <TableCell>Price</TableCell>
+              <TableCell>Guests</TableCell>
+              <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
+
           <TableBody>
-            {filteredTours.map((tour) => (
-              <TableRow key={tour.id}>
+            {filtered.map((row, i) => (
+              <TableRow key={i}>
                 <TableCell>
-                  <Typography fontWeight="bold">{tour.name}</Typography>
-                  <Typography variant="body2">{tour.category}</Typography>
+                  <Typography fontWeight="bold">{row.title}</Typography>
+                  <Typography variant="body2">
+                    {row.shortDescription}
+                  </Typography>
                 </TableCell>
-                <TableCell>{tour.city}</TableCell>
-                <TableCell align="center">
-                  <AttachMoney fontSize="small" /> {tour.adultPrice}
+                <TableCell>{row.city}</TableCell>
+                <TableCell>
+                  {row.currency} {row.priceFrom}
                 </TableCell>
-                <TableCell align="center">
-                  <People fontSize="small" /> {tour.capacity}
+                <TableCell>
+                  {row.minGuests}–{row.maxGuests}
                 </TableCell>
-                <TableCell align="center">
-                  <Chip
-                    label={tour.status}
-                    color={statusColor(tour.status)}
-                    size="small"
-                  />
-                </TableCell>
-                <TableCell align="center">
-                  <IconButton onClick={() => handleEdit(tour)}>
+                <TableCell>
+                  <IconButton
+                    onClick={() => {
+                      setEditingIndex(i);
+                      setOpen(true);
+                    }}
+                  >
                     <Edit />
                   </IconButton>
                   <IconButton>
                     <Visibility />
                   </IconButton>
-                  <IconButton onClick={() => handleDelete(tour.id)}>
+                  <IconButton
+                    onClick={() =>
+                      setData((prev) => prev.filter((_, idx) => idx !== i))
+                    }
+                  >
                     <Delete />
                   </IconButton>
                 </TableCell>
@@ -323,167 +252,194 @@ const TourManagement: React.FC = () => {
         </Table>
       </TableContainer>
 
-      {/* DIALOG */}
-      <Dialog open={openDialog} maxWidth="md" fullWidth>
-        <DialogTitle>{editingTour ? "Edit Tour" : "Create Tour"}</DialogTitle>
-        <DialogContent>
-          <Tabs value={tab} onChange={(_, v) => setTab(v)} sx={{ mb: 2 }}>
-            <Tab label="Basic" />
-            <Tab label="Pricing" />
-            <Tab label="Availability" />
-            <Tab label="Pickup" />
-            <Tab label="Policies" />
-          </Tabs>
+      {/* ===== DIALOG ===== */}
+      <Dialog open={open} maxWidth="md" fullWidth>
+        <form onSubmit={handleSubmit}>
+          <DialogTitle>
+            {editingIndex ? "Edit Tour" : "Create Tour"}
+          </DialogTitle>
 
-          {/* BASIC */}
-          {tab === 0 && (
-            <Stack spacing={2}>
-              <TextField
-                label="Tour Name"
-                value={formData.name}
-                onChange={(e) => handleChange("name", e.target.value)}
-              />
-              <TextField
-                label="City"
-                value={formData.city}
-                onChange={(e) => handleChange("city", e.target.value)}
-              />
-              <TextField
-                label="Category"
-                value={formData.category}
-                onChange={(e) => handleChange("category", e.target.value)}
-              />
-              <TextField
-                label="Short Description"
-                multiline
-                rows={3}
-                value={formData.shortDescription}
-                onChange={(e) =>
-                  handleChange("shortDescription", e.target.value)
-                }
-              />
-            </Stack>
-          )}
+          <DialogContent>
+            <Tabs value={tab} onChange={(_, v) => setTab(v)} sx={{ mb: 2 }}>
+              <Tab label="Basic" />
+              <Tab label="Location" />
+              <Tab label="Pricing" />
+              <Tab label="Media" />
+              <Tab label="SEO" />
+            </Tabs>
 
-          {/* PRICING */}
-          {tab === 1 && (
-            <Stack spacing={2}>
-              <TextField
-                label="Adult Price"
-                type="number"
-                value={formData.adultPrice}
-                onChange={(e) => handleChange("adultPrice", +e.target.value)}
-              />
-              <TextField
-                label="Child Price"
-                type="number"
-                value={formData.childPrice}
-                onChange={(e) => handleChange("childPrice", +e.target.value)}
-              />
-              <TextField
-                label="Infant Price"
-                type="number"
-                value={formData.infantPrice}
-                onChange={(e) => handleChange("infantPrice", +e.target.value)}
-              />
-            </Stack>
-          )}
+            {/* BASIC */}
+            {tab === 0 && (
+              <Stack spacing={2}>
+                <TextField
+                  label="Title"
+                  name="title"
+                  value={values.title}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={touched.title && Boolean(errors.title)}
+                  helperText={touched.title && errors.title}
+                />
 
-          {/* AVAILABILITY */}
-          {tab === 2 && (
-            <Stack spacing={2}>
-              <Select
-                multiple
-                value={formData.availableDays}
-                onChange={(e) => handleChange("availableDays", e.target.value)}
-              >
-                {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((d) => (
-                  <MenuItem key={d} value={d}>
-                    {d}
-                  </MenuItem>
-                ))}
-              </Select>
+                <TextField
+                  label="Short Description"
+                  name="shortDescription"
+                  value={values.shortDescription}
+                  onChange={handleChange}
+                  error={
+                    touched.shortDescription && Boolean(errors.shortDescription)
+                  }
+                  helperText={
+                    touched.shortDescription && errors.shortDescription
+                  }
+                />
 
-              <Select
-                multiple
-                value={formData.timeSlots}
-                onChange={(e) => handleChange("timeSlots", e.target.value)}
-              >
-                {["Morning", "Afternoon", "Evening"].map((t) => (
-                  <MenuItem key={t} value={t}>
-                    {t}
-                  </MenuItem>
-                ))}
-              </Select>
+                <TextField
+                  multiline
+                  rows={3}
+                  label="Description"
+                  name="description"
+                  value={values.description}
+                  onChange={handleChange}
+                  error={touched.description && Boolean(errors.description)}
+                  helperText={touched.description && errors.description}
+                />
+              </Stack>
+            )}
 
-              <TextField
-                label="Capacity"
-                type="number"
-                value={formData.capacity}
-                onChange={(e) => handleChange("capacity", +e.target.value)}
-              />
-            </Stack>
-          )}
+            {/* LOCATION */}
+            {tab === 1 && (
+              <Stack spacing={2}>
+                <TextField
+                  label="City"
+                  name="city"
+                  value={values.city}
+                  onChange={handleChange}
+                />
+                <TextField
+                  label="Country"
+                  name="country"
+                  value={values.country}
+                  onChange={handleChange}
+                />
+                <TextField
+                  label="Address"
+                  name="address"
+                  value={values.address}
+                  onChange={handleChange}
+                />
+                <TextField
+                  type="number"
+                  label="Latitude"
+                  value={values.latitude}
+                  onChange={(e) => setFieldValue("latitude", +e.target.value)}
+                />
+                <TextField
+                  type="number"
+                  label="Longitude"
+                  value={values.longitude}
+                  onChange={(e) => setFieldValue("longitude", +e.target.value)}
+                />
+              </Stack>
+            )}
 
-          {/* PICKUP */}
-          {tab === 3 && (
-            <Stack spacing={2}>
-              <Select
-                value={formData.transferType}
-                onChange={(e) => handleChange("transferType", e.target.value)}
-              >
-                <MenuItem value="SIC">SIC</MenuItem>
-                <MenuItem value="Private">Private</MenuItem>
-              </Select>
-              <TextField
-                label="Pickup Locations (comma separated)"
-                value={formData.pickupLocations.join(",")}
-                onChange={(e) =>
-                  handleChange("pickupLocations", e.target.value.split(","))
-                }
-              />
-            </Stack>
-          )}
+            {/* PRICING */}
+            {tab === 2 && (
+              <Stack spacing={2}>
+                <TextField
+                  type="number"
+                  label="Duration"
+                  value={values.durationInMinutes}
+                  onChange={(e) =>
+                    setFieldValue("durationInMinutes", +e.target.value)
+                  }
+                />
+                <TextField
+                  type="number"
+                  label="Min Guests"
+                  value={values.minGuests}
+                  onChange={(e) => setFieldValue("minGuests", +e.target.value)}
+                />
+                <TextField
+                  type="number"
+                  label="Max Guests"
+                  value={values.maxGuests}
+                  onChange={(e) => setFieldValue("maxGuests", +e.target.value)}
+                />
+                <TextField
+                  type="number"
+                  label="Price From"
+                  value={values.priceFrom}
+                  onChange={(e) => setFieldValue("priceFrom", +e.target.value)}
+                />
+                <TextField
+                  label="Currency"
+                  value={values.currency}
+                  onChange={handleChange}
+                />
+              </Stack>
+            )}
 
-          {/* POLICIES */}
-          {tab === 4 && (
-            <Stack spacing={2}>
-              <TextField
-                label="Cancellation Policy"
-                multiline
-                rows={2}
-                value={formData.cancellationPolicy}
-                onChange={(e) =>
-                  handleChange("cancellationPolicy", e.target.value)
-                }
-              />
-              <TextField
-                label="Child Policy"
-                multiline
-                rows={2}
-                value={formData.childPolicy}
-                onChange={(e) => handleChange("childPolicy", e.target.value)}
-              />
-              <TextField
-                label="Refund Policy"
-                multiline
-                rows={2}
-                value={formData.refundPolicy}
-                onChange={(e) => handleChange("refundPolicy", e.target.value)}
-              />
-            </Stack>
-          )}
-        </DialogContent>
+            {/* MEDIA */}
+            {tab === 3 && (
+              <Stack spacing={2}>
+                <TextField
+                  label="Cover Image URL"
+                  value={values.coverImageUrl}
+                  onChange={handleChange}
+                  name="coverImageUrl"
+                />
+                <TextField
+                  label="Gallery Images"
+                  value={values.imageUrls.join(",")}
+                  onChange={(e) =>
+                    setFieldValue("imageUrls", e.target.value.split(","))
+                  }
+                />
+              </Stack>
+            )}
 
-        <DialogActions>
-          <Button onClick={() => setOpenDialog(false)}>Cancel</Button>
-          <Button variant="contained" onClick={handleSave}>
-            {editingTour ? "Update" : "Create"}
-          </Button>
-        </DialogActions>
+            {/* SEO */}
+            {tab === 4 && (
+              <Stack spacing={2}>
+                <TextField
+                  label="Meta Title"
+                  value={values.metaTitle}
+                  onChange={handleChange}
+                  name="metaTitle"
+                />
+                <TextField
+                  multiline
+                  rows={2}
+                  label="Meta Description"
+                  value={values.metaDescription}
+                  onChange={handleChange}
+                  name="metaDescription"
+                />
+              </Stack>
+            )}
+          </DialogContent>
+
+          <DialogActions>
+            <Button onClick={onClose}>Cancel</Button>
+            <Button
+              type="submit"
+              variant="contained"
+              disabled={!isValid || !dirty || isSubmitting}
+            >
+              {isSubmitting ? (
+                <CircularProgress size={18} />
+              ) : editingIndex ? (
+                "Update"
+              ) : (
+                "Create"
+              )}
+            </Button>
+          </DialogActions>
+        </form>
       </Dialog>
     </Paper>
   );
 };
 
-export default TourManagement;
+export default ToursManagement;

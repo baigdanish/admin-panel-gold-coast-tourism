@@ -17,10 +17,10 @@ function useAuthApiAction() {
     try {
       const response: any = await login(values);
 
-      if (response.statusCode === 200) {
+      if (response.success === true) {
         dispatch(
           setUserCredential({
-            token: response.data,
+            token: response.data.tokan,
             isLoggedIn: true,
           })
         );
