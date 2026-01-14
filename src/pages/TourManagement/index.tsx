@@ -26,6 +26,8 @@ import { Add, Edit, Delete, Search, Visibility } from "@mui/icons-material";
 import type { IRequestTours } from "../../interfaces/tours.types";
 import { useToursApiActions } from "../../apiActions/useToursApiActions";
 import useTourForm from "../../forms/tours/useTourForm";
+import { useFetchToursCategories } from "../../queries/tours/useFetchToursCategories";
+import { useFetchTours } from "../../queries/tours/useFetchTours";
 
 /* =======================
    EMPTY TEMPLATE
@@ -105,7 +107,10 @@ const ToursManagement: React.FC = () => {
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [tab, setTab] = useState(0);
   const [search, setSearch] = useState("");
-
+  const { data: tours } = useFetchTours();
+  const { data: categories } = useFetchToursCategories();
+  console.log("Tour Categories:", categories);
+  console.log("Tours Data:", tours);
   /* =======================
      SUBMIT
   ======================= */

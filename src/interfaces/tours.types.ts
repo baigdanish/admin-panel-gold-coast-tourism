@@ -26,3 +26,18 @@ export interface IRequestTours {
   metaTitle: string;
   metaDescription: string;
 }
+
+export interface IResponseToursCategories {
+  data: IToursCategories[];
+  success: boolean;
+  message: any;
+}
+
+export interface IToursCategories {
+  id: number;
+  name: string;
+  slug: string;
+  isActive: boolean;
+  tourCategories: any[];
+  tours: any[];
+}
