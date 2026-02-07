@@ -1,4 +1,5 @@
 export interface IRequestTours {
+  id?: number;
   title: string;
   shortDescription: string;
   description: string;

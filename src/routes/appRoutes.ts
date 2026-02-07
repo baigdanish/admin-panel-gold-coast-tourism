@@ -9,6 +9,7 @@ const AppRoutes = {
   VOUCHER_GENERATOR: "/voucher-generator",
   TOUR_MANAGEMENT: "/tour-management",
   MANUAL_BOOKING: "/manual-booking",
+  CREATE_TOUR: "create",
 };
 
 export default AppRoutes;

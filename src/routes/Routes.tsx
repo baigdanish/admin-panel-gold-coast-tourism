@@ -6,6 +6,7 @@ import CustomerManagement from "../pages/CustomerManagement";
 import Dashboard from "../pages/Dashboard";
 import ManualBookingManagement from "../pages/ManualBooking";
 import TourManagement from "../pages/TourManagement";
+import TourDetailPage from "../pages/TourManagement/TourDetail";
 import VoucherGenerator from "../pages/VoucherGenerator";
 import AppRoutes from "./appRoutes";
 
@@ -41,7 +42,17 @@ const APP_ROUTES = [
       },
       {
         path: AppRoutes.TOUR_MANAGEMENT,
-        element: <TourManagement />,
+        element: <BlankLayout />,
+        children: [
+          {
+            path: AppRoutes.TOUR_MANAGEMENT,
+            element: <TourManagement />,
+          },
+          {
+            path: `${AppRoutes.TOUR_MANAGEMENT}/:id`,
+            element: <TourDetailPage />,
+          },
+        ],
       },
       {
         path: AppRoutes.MANUAL_BOOKING,

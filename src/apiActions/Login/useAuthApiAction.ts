@@ -18,11 +18,12 @@ function useAuthApiAction() {
       const response: any = await login(values);
 
       if (response.success === true) {
+        console.log("response", response);
         dispatch(
           setUserCredential({
-            token: response.data.tokan,
+            token: response.data.token,
             isLoggedIn: true,
-          })
+          }),
         );
 
         navigate(AppRoutes.DASHBOARD);

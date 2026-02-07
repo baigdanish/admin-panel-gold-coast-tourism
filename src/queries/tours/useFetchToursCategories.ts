@@ -5,10 +5,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchToursCategories } from "../../services/tours.service";
 import { QueryKeys } from "../../config/queryKeys";
+import type { IResponseToursCategories } from "../../interfaces/tours.types";
 
-async function getToursCategories() {
+async function getToursCategories():Promise<IResponseToursCategories> {
   try {
-    const response = await fetchToursCategories();
+    const response: IResponseToursCategories  = await fetchToursCategories();
 
     return response;
   } catch (error) {

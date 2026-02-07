@@ -8,7 +8,7 @@ const client = axios.create({
 });
 
 const AUTH_ROUTES = ["login", "register", "check-username"];
-const FILE_ROUTES = ["users", "blogs"];
+const FILE_ROUTES = ["Tours", "blogs"];
 
 client.interceptors.request.use(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -34,7 +34,7 @@ client.interceptors.request.use(
   (error: any) => {
     console.log("erroMain", error);
     return Promise.reject(error);
-  }
+  },
 );
 
 client.interceptors.response.use(
@@ -52,7 +52,7 @@ client.interceptors.response.use(
       // TODO: handle expired token
     }
     return Promise.reject(error.response?.data);
-  }
+  },
 );
 
 export default client;

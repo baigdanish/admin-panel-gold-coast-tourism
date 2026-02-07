@@ -1,4 +1,4 @@
-const BASE_URL = "https://3trqmc82-59286.inc1.devtunnels.ms";
+const BASE_URL = "http://72.62.199.3";
 const endPoints = {
   login: "login",
 };
