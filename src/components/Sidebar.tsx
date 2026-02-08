@@ -21,31 +21,41 @@ import { useNavigate, useLocation } from "react-router-dom";
 import AppRoutes from "../routes/appRoutes";
 
 const menuItems = [
-  { text: "Dashboard", icon: <DashboardIcon />, path: "/" },
+  { text: "Dashboard", icon: <DashboardIcon />, path: "/", color: "#6366f1" },
+
   {
     text: "Tour Management",
     icon: <TravelExploreIcon />,
     path: "/tour-management",
+    color: "#0ea5e9",
   },
+
   {
     text: "Booking Tracker",
     icon: <ConfirmationNumberIcon />,
     path: AppRoutes.BOOKING_TRACKER,
+    color: "#f59e0b",
   },
+
   {
     text: "Customer Management",
     icon: <PeopleAltIcon />,
     path: AppRoutes.CUSTOMER_MANAGEMENT,
+    color: "#10b981",
   },
+
   {
     text: "Voucher Generator",
     icon: <CardGiftcardIcon />,
     path: AppRoutes.VOUCHER_GENERATOR,
+    color: "#ec4899",
   },
+
   {
     text: "Manual Booking",
     icon: <EventAvailableIcon />,
     path: AppRoutes.MANUAL_BOOKING,
+    color: "#8b5cf6",
   },
 ];
 
@@ -78,7 +88,7 @@ const Sidebar = () => {
           variant="h6"
           sx={{
             fontWeight: 700,
-            background: "linear-gradient(90deg, #0ea5e9, #6366f1)",
+            background: "linear-gradient(90deg, #ffea00, #6366f1)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
           }}
@@ -119,8 +129,17 @@ const Sidebar = () => {
                 sx={{
                   minWidth: 38,
                   color: isActive(item.path)
-                    ? "primary.main"
-                    : "text.secondary",
+                    ? item.color // active → its own color
+                    : item.color + "cc", // inactive → lighter version
+                  "&.Mui-selected": {
+                    background: `${item.color}15`,
+                    borderLeft: "4px solid",
+                    borderColor: item.color,
+
+                    "& .MuiListItemIcon-root": {
+                      color: item.color,
+                    },
+                  },
                 }}
               >
                 {item.icon}

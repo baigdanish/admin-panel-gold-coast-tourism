@@ -1,7 +1,7 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useSnackbar } from "../components/Snackbar";
 import type { IActionResponse } from "../interfaces/global.types";
-import { addTours } from "../services/tours.service";
+import { addTours, deleteTour } from "../services/tours.service";
 import type { IRequestTours } from "../interfaces/tours.types";
 import { QueryKeys } from "../config/queryKeys";
 
@@ -12,7 +12,7 @@ const useToursApiActions = () => {
   const tryAddTours = async (values: IRequestTours) => {
     try {
       const response: IActionResponse = await addTours(values);
-      if (response.statusCode === 200) {
+      if (response.success === true) {
         queryClient.invalidateQueries({
           queryKey: [QueryKeys.tours],
         });
@@ -34,7 +34,29 @@ const useToursApiActions = () => {
   const tryUpdateTour = async (values: IRequestTours) => {
     try {
       const response: IActionResponse = await addTours(values);
-      if (response.statusCode === 200) {
+      if (response.success === true) {
+        queryClient.invalidateQueries({
+          queryKey: [QueryKeys.tours],
+        });
+        // snackbar?.show({
+        //     title: response?.message,
+        //     type: "success",
+        // });
+      }
+      return response;
+    } catch (err: any) {
+      const msg = err?.message || "Something went wrong";
+      snackbar?.show({
+        title: msg,
+        type: "error",
+      });
+      return msg;
+    }
+  };
+  const tryDeleteTour = async (id: number) => {
+    try {
+      const response: IActionResponse = await deleteTour(id);
+      if (response.success === true) {
         queryClient.invalidateQueries({
           queryKey: [QueryKeys.tours],
         });
@@ -57,6 +79,7 @@ const useToursApiActions = () => {
   return {
     tryAddTours,
     tryUpdateTour,
+    tryDeleteTour,
   };
 };
 

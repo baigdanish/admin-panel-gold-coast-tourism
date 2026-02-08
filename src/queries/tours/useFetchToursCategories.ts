@@ -7,9 +7,9 @@ import { fetchToursCategories } from "../../services/tours.service";
 import { QueryKeys } from "../../config/queryKeys";
 import type { IResponseToursCategories } from "../../interfaces/tours.types";
 
-async function getToursCategories():Promise<IResponseToursCategories> {
+async function getToursCategories(): Promise<IResponseToursCategories> {
   try {
-    const response: IResponseToursCategories  = await fetchToursCategories();
+    const response: IResponseToursCategories = await fetchToursCategories();
 
     return response;
   } catch (error) {
@@ -26,7 +26,6 @@ const useFetchToursCategories = (enabled = true) => {
       return getToursCategories();
     },
     enabled,
-    staleTime: 5 * 60 * 1000,
   });
 };
 

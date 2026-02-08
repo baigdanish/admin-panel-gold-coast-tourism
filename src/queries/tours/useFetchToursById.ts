@@ -25,7 +25,6 @@ const useFetchToursById = (id: number, enabled = true) => {
       return getToursById(id);
     },
     enabled,
-    staleTime: 5 * 60 * 1000,
   });
 };
 

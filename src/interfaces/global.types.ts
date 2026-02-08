@@ -12,6 +12,7 @@ export interface IActionResponse {
   data?: any;
   message: string;
   totalCount: number;
+  success?: boolean;
 }
 
 export interface IOptions {

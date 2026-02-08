@@ -10,6 +10,7 @@ import "./index.css";
 import { persister, store } from "./redux/store";
 import { AlertProvider } from "./components/Alert";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import theme from "./theme/theme";
 
 function AppRoot() {
   const queryClient = new QueryClient({
@@ -23,7 +24,7 @@ function AppRoot() {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persister}>
         <QueryClientProvider client={queryClient}>
-          <ThemeProvider theme={{}}>
+          <ThemeProvider theme={theme}>
             <StyledEngineProvider injectFirst>
               <SnackbarProvider>
                 <AlertProvider>
@@ -43,5 +44,5 @@ createRoot(document.getElementById("root")!).render(
     <Router>
       <AppRoot />
     </Router>
-  </StrictMode>
+  </StrictMode>,
 );

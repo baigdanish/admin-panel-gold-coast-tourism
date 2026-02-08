@@ -11,6 +11,7 @@ import {
   Button,
   CircularProgress,
   Divider,
+  IconButton,
 } from "@mui/material";
 
 import LocationOnIcon from "@mui/icons-material/LocationOn";
@@ -19,6 +20,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import EditIcon from "@mui/icons-material/Edit";
 
 import { useFetchToursById } from "../../queries/tours/useFetchToursById";
+import { ArrowBack } from "@mui/icons-material";
 
 export default function TourDetailPage() {
   const { id } = useParams();
@@ -38,34 +40,21 @@ export default function TourDetailPage() {
   return (
     <Paper sx={{ p: 3, maxWidth: 1000, mx: "auto" }}>
       {/* ===== HEADER ===== */}
-      <Stack
-        direction="row"
-        justifyContent="space-between"
-        alignItems="center"
-        mb={2}
+      <Box
+        sx={{ display: "flex", alignItems: "center", gap: 2, marginBottom: 1 }}
       >
-        <Button
-          startIcon={<ArrowBackIcon />}
+        <IconButton
           onClick={() => navigate("/tour-management")}
+          sx={{ color: "#ffd712" }}
         >
-          Back
-        </Button>
-
-        <Button
-          variant="contained"
-          startIcon={<EditIcon />}
-          onClick={() =>
-            navigate("/tour-management", { state: { editId: tour.id } })
-          }
-        >
-          Edit Tour
-        </Button>
-      </Stack>
+          <ArrowBack sx={{ color: "#ffd712" }} />
+        </IconButton>
+        <Typography variant="h5" fontWeight="bold">
+          {tour.title}
+        </Typography>
+      </Box>
 
       {/* ===== TITLE ===== */}
-      <Typography variant="h5" fontWeight="bold" mb={2}>
-        {tour.title}
-      </Typography>
 
       {/* ===== COVER IMAGE ===== */}
       <Box mb={2}>

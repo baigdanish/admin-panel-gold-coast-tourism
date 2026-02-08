@@ -87,7 +87,13 @@ function Alert(props: IProps) {
           </DialogContent>
 
           <DialogActions
-            sx={{ display: "flex", justifyContent: "flex-end", mb: 1, mr: 2 }}
+            sx={{
+              display: "flex",
+              justifyContent: "flex-end",
+              mb: 1,
+              mr: 2,
+              color: "#fff",
+            }}
           >
             <Button
               sx={{
@@ -95,6 +101,7 @@ function Alert(props: IProps) {
                 fontSize: "15px",
                 height: "40px",
                 width: "30%",
+                color: "#fff",
                 backgroundColor: "#F04461",
                 "&:hover": {
                   backgroundColor: "#D73852",
@@ -110,6 +117,7 @@ function Alert(props: IProps) {
                 fontSize: "15px",
                 height: "40px",
                 width: "30%",
+                color: "#fff",
                 backgroundColor: "#41DA7E",
                 "&:hover": {
                   backgroundColor: "#37C26E",

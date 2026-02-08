@@ -23,23 +23,23 @@ import {
   Search,
   Visibility,
   LocationOn,
-  People,
 } from "@mui/icons-material";
 
 import AddTour from "./AddTour";
 import { useFetchTours } from "../../queries/tours/useFetchTours";
-import { useFetchToursById } from "../../queries/tours/useFetchToursById";
 import { useNavigate } from "react-router-dom";
+import { useToursApiActions } from "../../apiActions/useToursApiActions";
+import { useAlert } from "../../components/Alert";
 
 export default function ToursManagement() {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [selectedTour, setSelectedTour] = useState<any | null>(null);
-
+  const { tryDeleteTour } = useToursApiActions();
   const { data: toursResponse, isLoading } = useFetchTours();
-  const { data: toursDataById } = useFetchToursById(1);
   const navigate = useNavigate();
-  console.log("Tours by ID:", toursDataById);
+  const alert = useAlert();
+
   const tours = toursResponse?.data || [];
 
   const filtered = tours.filter((t: any) =>
@@ -54,6 +54,15 @@ export default function ToursManagement() {
   const handleEdit = (tour: any) => {
     setSelectedTour(tour);
     setOpen(true);
+  };
+  const handleDelete = (id: any) => {
+    alert?.show({
+      title: "Confirmation",
+      message: "Do you really want to delete this tour?",
+      cancelText: "No",
+      confirmText: "Yes",
+      onConfirm: () => tryDeleteTour?.(id),
+    });
   };
 
   return (
@@ -164,7 +173,10 @@ export default function ToursManagement() {
                     <Visibility />
                   </IconButton>
 
-                  <IconButton color="error">
+                  <IconButton
+                    color="error"
+                    onClick={() => handleDelete(tour.id)}
+                  >
                     <Delete />
                   </IconButton>
                 </Box>

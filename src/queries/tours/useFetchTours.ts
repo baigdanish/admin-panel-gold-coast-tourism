@@ -25,7 +25,6 @@ const useFetchTours = (enabled = true) => {
       return getTours();
     },
     enabled,
-    staleTime: 5 * 60 * 1000,
   });
 };
 

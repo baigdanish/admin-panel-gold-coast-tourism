@@ -125,18 +125,18 @@ export default function AddTour({ open, onClose, editData }: IProps) {
     });
 
     try {
-      // let response;
+      let response;
 
-      // if (editData?.id) {
-      //   // 👉 UPDATE API
-      //   response = await tryUpdateTour(formData);
-      // } else {
-      // 👉 ADD API
-      const response = await tryAddTours(formData);
-      // }
+      if (editData?.id) {
+        // 👉 UPDATE API
+        response = await tryUpdateTour(formData);
+      } else {
+        // 👉 ADD API
+        const response = await tryAddTours(formData);
 
-      if (response.data.success) {
-        onClose();
+        if (response.success) {
+          onClose();
+        }
       }
     } finally {
       setIsSubmitting(false);
@@ -247,23 +247,12 @@ export default function AddTour({ open, onClose, editData }: IProps) {
               boxShadow: "0 2px 12px rgba(0,0,0,0.08)",
             }}
           >
-            <IconButton
-              onClick={onClose}
-              sx={{
-                mr: 2,
-                bgcolor: "primary.light",
-                color: "primary.main",
-                "&:hover": { bgcolor: "primary.main", color: "white" },
-              }}
-            >
-              <ArrowBack />
+            <IconButton onClick={onClose} sx={{ color: "#ffd712" }}>
+              <ArrowBack sx={{ color: "#ffd712" }} />
             </IconButton>
             <Box>
               <Typography variant="h4" fontWeight={600} color="primary">
                 Create New Tour
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Fill in the details to create an amazing tour experience
               </Typography>
             </Box>
           </Box>
