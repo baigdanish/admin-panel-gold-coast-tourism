@@ -1,4 +1,4 @@
-const BASE_URL = "http://212.38.94.57";
+const BASE_URL = "https://api.goldcoasttourism.ae";
 const endPoints = {
   login: "login",
 };

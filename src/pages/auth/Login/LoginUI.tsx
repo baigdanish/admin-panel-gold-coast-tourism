@@ -1,5 +1,7 @@
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import FlightTakeoff from "@mui/icons-material/FlightTakeoff";
+import BeachAccess from "@mui/icons-material/BeachAccess";
 import {
   Box,
   Button,
@@ -9,6 +11,7 @@ import {
   InputAdornment,
   TextField,
   Typography,
+  Stack,
 } from "@mui/material";
 import "./login.css";
 
@@ -38,7 +41,7 @@ function LoginUI(props: ILoginUI) {
         justifyContent: "center",
         alignItems: "center",
         width: "100%",
-        background: "linear-gradient(to right, #a1c4fd, #c2e9fb)",
+        background: "linear-gradient(120deg, #0ea5e9, #6366f1)",
       }}
     >
       <Container maxWidth="xs">
@@ -46,14 +49,29 @@ function LoginUI(props: ILoginUI) {
           sx={{
             p: 4,
             backgroundColor: "white",
-            borderRadius: 2,
-            boxShadow: 3,
+            borderRadius: "20px",
+            boxShadow: "0 20px 40px rgba(0,0,0,.15)",
             textAlign: "center",
           }}
         >
-          <Typography gutterBottom variant="h4">
-            Login
-          </Typography>
+          {/* Brand Section */}
+          <Stack alignItems="center" spacing={0.5} mb={2}>
+            <FlightTakeoff sx={{ fontSize: 38, color: "primary.main" }} />
+            <Typography
+              variant="h5"
+              fontWeight={700}
+              sx={{
+                background: "linear-gradient(90deg, #0ea5e9, #6366f1)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
+              Gold Coast Tourism
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Sign in to manage adventures
+            </Typography>
+          </Stack>
 
           <TextField
             fullWidth
@@ -61,11 +79,18 @@ function LoginUI(props: ILoginUI) {
             error={!!touched.email && !!errors.email}
             helperText={(touched.email && errors.email) || ""}
             margin="normal"
-            placeholder="Enter your email"
+            label="Email Address"
             value={values.email}
             variant="outlined"
             onBlur={handleBlur("email")}
             onChange={handleChange("email")}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <BeachAccess fontSize="small" />
+                </InputAdornment>
+              ),
+            }}
           />
 
           <TextField
@@ -83,7 +108,7 @@ function LoginUI(props: ILoginUI) {
               ),
             }}
             margin="normal"
-            placeholder="Enter your password"
+            label="Password"
             type={showPassword ? "text" : "password"}
             value={values.password}
             variant="outlined"
@@ -95,20 +120,28 @@ function LoginUI(props: ILoginUI) {
             fullWidth
             sx={{
               mt: 2,
-              background: "linear-gradient(to right, #2193b0, #6dd5ed)",
-              color: "white",
+              borderRadius: "12px",
+              py: 1.3,
+              background: "linear-gradient(90deg, #0ea5e9, #6366f1)",
+              textTransform: "none",
+              fontSize: "15px",
               "&:hover": {
-                background: "linear-gradient(to right, #2193b0, #6dd5ed)",
+                background: "linear-gradient(90deg, #0ea5e9, #6366f1)",
+                opacity: 0.95,
               },
             }}
             variant="contained"
             onClick={handleSubmit}
           >
-            {isSubmitting ? <CircularProgress size={18} /> : "Log in"}
+            {isSubmitting ? (
+              <CircularProgress size={18} color="inherit" />
+            ) : (
+              "Log in"
+            )}
           </Button>
 
-          <Typography sx={{ mt: 2 }} variant="body2">
-            Or sign in with:
+          <Typography sx={{ mt: 2 }} variant="caption" color="text.secondary">
+            Explore • Manage • Travel
           </Typography>
         </Box>
       </Container>
