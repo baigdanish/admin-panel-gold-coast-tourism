@@ -16,7 +16,6 @@ import {
   Chip,
   Box,
   IconButton,
-  FormHelperText,
   Alert,
   CircularProgress,
 } from "@mui/material";
@@ -125,11 +124,12 @@ export default function AddTour({ open, onClose, editData }: IProps) {
     });
 
     try {
-      let response;
-
       if (editData?.id) {
         // 👉 UPDATE API
-        response = await tryUpdateTour(formData);
+        const response = await tryUpdateTour(formData);
+        if (response.success) {
+          onClose();
+        }
       } else {
         // 👉 ADD API
         const response = await tryAddTours(formData);

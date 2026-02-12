@@ -3,7 +3,6 @@ import { Box, Typography, Container } from "@mui/material";
 
 import SalesAnalytics from "./components/SalesAnalytics";
 import BookingAnalytics from "./components/BookingAnalytics";
-import TourManagement from "./components/TourManagement";
 
 const Dashboard: React.FC = () => {
   return (

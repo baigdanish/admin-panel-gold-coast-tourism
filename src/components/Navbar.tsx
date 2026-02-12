@@ -1,4 +1,3 @@
-import React from "react";
 import {
   AppBar,
   Toolbar,
@@ -11,7 +10,7 @@ import {
   InputBase,
   Paper,
 } from "@mui/material";
-import { Notifications, Search, Menu as MenuIcon } from "@mui/icons-material";
+import { Notifications, Search } from "@mui/icons-material";
 
 const Navbar = () => {
   return (

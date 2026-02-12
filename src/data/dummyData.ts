@@ -1,6 +1,4 @@
-import type { Tour } from "../pages/TourManagement";
-
-export const dummyTours: Tour[] = [
+export const dummyTours = [
   {
     id: 1,
     name: "Dubai Desert Safari with BBQ Dinner",

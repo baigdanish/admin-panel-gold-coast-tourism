@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   Paper,
@@ -8,7 +7,6 @@ import {
   Box,
   Stack,
   Chip,
-  Button,
   CircularProgress,
   Divider,
   IconButton,
@@ -16,8 +14,6 @@ import {
 
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PeopleIcon from "@mui/icons-material/People";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import EditIcon from "@mui/icons-material/Edit";
 
 import { useFetchToursById } from "../../queries/tours/useFetchToursById";
 import { ArrowBack } from "@mui/icons-material";
