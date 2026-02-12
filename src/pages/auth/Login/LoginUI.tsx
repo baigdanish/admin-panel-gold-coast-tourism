@@ -150,4 +150,4 @@ function LoginUI(props: ILoginUI) {
 }
 
 export default LoginUI;
-// deployed on vercel: https://gold-coast-tourism.vercel.app/login
+//  on vercel: https://gold-coast-tourism.vercel.app/login
